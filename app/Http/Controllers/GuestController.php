@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Guest;
 use Illuminate\Http\Request;
-use App\Config\Constants;
 
 class GuestController extends Controller
 {
@@ -12,9 +11,9 @@ class GuestController extends Controller
     {
         $guests = Guest::all();
         $countGuests = $guests->count();
-        $pendingGuests = $guests->where('guest_state_id', constants::GUEST_STATE['NOT_CONFIRMED'])->count();
-        $confirmedGuests = $guests->where('guest_state_id', constants::GUEST_STATE['CONFIRMED'])->count();
-        $rejectedGuests = $guests->where('guest_state_id', constants::GUEST_STATE['REJECTED'])->count();
+        $pendingGuests = $guests->where('guest_state_id', config('guest.states.NOT_CONFIRMED'))->count();
+        $confirmedGuests = $guests->where('guest_state_id', config('guest.states.CONFIRMED'))->count();
+        $rejectedGuests = $guests->where('guest_state_id', config('guest.states.REJECTED'))->count();
        
         return response()->json([
             'message' => 'Invitados obtenidos exitosamente',
@@ -35,7 +34,7 @@ class GuestController extends Controller
 
         if ($validateGuest) {
             if(!isset($validateGuest['guest_state_id'])){
-                $validateGuest['guest_state_id'] = constants::GUEST_STATE['NOT_CONFIRMED'];     
+                $validateGuest['guest_state_id'] = config('guest.states.NOT_CONFIRMED');     
             }
 
             $guest = Guest::create($validateGuest);

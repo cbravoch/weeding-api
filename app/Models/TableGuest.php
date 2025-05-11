@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GuestState extends Model
+class TableGuest extends Model
 {
-    protected $table = 'guest_state';
+    protected $table = 'table_guests';
+
     public $timestamps = false;
-    
 }
